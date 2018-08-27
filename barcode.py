@@ -4,8 +4,12 @@ from string import Template
 import logging, sys, socket, time
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
+#Basic label design is saved to tile and can be customised.
 LBL_FILE='lblTemplate.txt'
+#Number of copies to print after each scan
 COPIES=1
+#Sets max length for barcode
+MAXLEN=11
 
 #class for barcode reader
 
@@ -82,19 +86,20 @@ class lbl(object):
                 #print(self.__cleanBc(barCode))
                 lblStr=t.substitute(hostName=socket.gethostname(), barCode=self.__cleanBc(barCode), numCopies=numCopies)
                 self.zebra.output(lblStr)
-
+        #Allows only ASCII 32-127 and sets MAXLEN
         def __cleanBc(self, barCode):
                 b=[]
                 for s in barCode:
                         if 32 <= ord(s) <=127:
                                 b += s
-                return("".join(b)[:11])
+                return("".join(b)[:MAXLEN])
 
 if __name__ == '__main__':
         z=zebra()
         zQueues=z.getqueues()
         q=0
         i=0
+        #If more than one printer set up in CUPS - asks for target
         if(len(zQueues))==1:
                 z.setqueue(zQueues[0])
                 logging.debug('Printer: {}'.format(zQueues[0]))
