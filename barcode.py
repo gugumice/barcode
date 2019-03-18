@@ -1,8 +1,11 @@
-
 #!/usr/bin/python
 from zebra import zebra
 from string import Template
-import logging, sys, socket
+import logging, sys, socket, os
+import serial
+
+print os.path.dirname(os.path.abspath(sys.argv[0]))
+
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 LBL_FILE='lblTemplate.txt'
@@ -11,20 +14,19 @@ COPIES=1
 #class for barcode reader
 
 class bcr(object):
-        def __init__(self, device='/dev/ttyACM0'):
+        def __init__(self, port='/dev/ttyACM0',
+                        timeout=1):
                 self.bc=()
                 try:
-                        self.fp=open(device, 'rb')
-                except:
-                        print('Canot open: {}'.format(device))
+                        self.fp=serial.Serial(port=port,timeout=timeout)
+                except Exception as e:
+                        print('Canot open: {}\n{}'.format(port,e))
                         sys.exit(1)
         def readBC(self):
                 buffer=self.fp.readline()
                 return(buffer.strip('\n'))
 
 #class for printing labels
-
-
 
 class lbl(object):
         def __init__(self, queue=1):
@@ -36,14 +38,18 @@ class lbl(object):
                         logging.debug('Queue {} not found!'.format(queue))
                         sys.exit(1)
                 try:
-                        with open(LBL_FILE) as f:
+                        fl='{}/{}'.format(os.path.dirname(os.path.abspath(sys.argv[0])),LBL_FILE)
+                        with open(fl) as f:
                                 self.lblText=f.read()
-                        logging.debug('Reading from {}'.format(LBL_FILE))
+                        logging.debug('Reading from {}'.format(fl))
                 except:
                         logging.debug('Error reading from {}. Using defaults'.format(LBL_FILE))
                         self.lblText='''
 
 ^XA
+#label darkness 0-30
+~SD10
+#label offset width,height
 ^LH20,10^MTT
 ^FO0,0
 ^AS
@@ -122,10 +128,11 @@ if __name__ == '__main__':
                                         lblPref=lblStr[1:]
                                         lblStr=''
                                 else:
-                                        #print('{}'.format(pref+s))
-                                        #print('{}, type-{}, len-{}'.format(s, type(s),len(s)))
+                                        #print('{}'.format(lblPref+lblStr))
                                         lb.lblPrint(lblPref+lblStr, COPIES)
                                         lblPref=''
 
+                print('*')
+                time.sleep(.5)
         except KeyboardInterrupt:
                 print('Interrupted')
