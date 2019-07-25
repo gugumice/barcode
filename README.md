@@ -16,6 +16,7 @@ $ sudo apt-get install
 CUPS printer setup:
 - sudo cupsctl --remote-admin --remote-anyifconfig
 - sudo usermod -a -G lpadmin pi
+
 Add printer, choose ZEBRA
 - Set Make to RAW
 
