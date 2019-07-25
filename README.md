@@ -4,6 +4,8 @@ This version tested on PiIII, RASPBIAN STRETCH LITE
 Version:June 2018
 
 Requires CUPS, ZEBRA (https://pypi.org/project/zebra/)
+PYTHON
+- sudo pip install zebra pyserial
 
 https://drupalista.net/blog/raspberry-pi-install-printer-raspbian-lite
 
