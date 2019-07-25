@@ -7,12 +7,11 @@ Requires CUPS, ZEBRA (https://pypi.org/project/zebra/)
 
 https://drupalista.net/blog/raspberry-pi-install-printer-raspbian-lite
 
-$ sudo apt-get install cups cups-bsd
-
+$ sudo apt-get install
 ! Cups-bsd is IMPORTANT for lpr to function
 
 CUPS printer setup:
-
+- sudo cupsctl --remote-admin --remote-anyifconfig
 - Choose ZEBRA
 - Set Make to RAW
 
