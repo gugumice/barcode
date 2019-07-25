@@ -10,11 +10,13 @@ PYTHON
 https://drupalista.net/blog/raspberry-pi-install-printer-raspbian-lite
 
 $ sudo apt-get install
+
 ! Cups-bsd is IMPORTANT for lpr to function
 
 CUPS printer setup:
 - sudo cupsctl --remote-admin --remote-anyifconfig
-- Choose ZEBRA
+- sudo usermod -a -G lpadmin pi
+Add printer, choose ZEBRA
 - Set Make to RAW
 
 Auto run un startup:
