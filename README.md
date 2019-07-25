@@ -9,21 +9,19 @@ https://drupalista.net/blog/raspberry-pi-install-printer-raspbian-lite
 
 $ sudo apt-get install cups cups-bsd
 
-!cups-bsd is IMPORTANT for lpr to function
+! Cups-bsd is IMPORTANT for lpr to function
 
 CUPS printer setup:
 
-1. Choose ZEBRA
-2. set Make to RAW
+- Choose ZEBRA
+- Set Make to RAW
 
 Auto run un startup:
 
-1. sudo cp barcode.service /etc/systemd/system/barcode.service
-
-2. sudo systemctl enable barcode.service
+- sudo cp barcode.service /etc/systemd/system/barcode.service
+- sudo systemctl enable barcode.service
 
 Disable auto run:
-
 - sudo systemctl disable barcode.service
 
 If more than one printer is configured in CUPS, script will ask which printer to use for labels.
