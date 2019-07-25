@@ -18,12 +18,12 @@ CUPS printer setup:
 
 Auto run un startup:
 
-sudo cp barcode.service /etc/systemd/system/barcode.service
+1. sudo cp barcode.service /etc/systemd/system/barcode.service
 
-sudo systemctl enable barcode.service
+2. sudo systemctl enable barcode.service
 
 Disable auto run:
 
-sudo systemctl disable barcode.service
+- sudo systemctl disable barcode.service
 
 If more than one printer is configured in CUPS, script will ask which printer to use for labels.
